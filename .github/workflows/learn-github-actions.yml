@@ -39,3 +39,8 @@ jobs:
           } else {
             Write-Output "There were $($errors.Count) errors and $($warnings.Count) warnings total."
           }
+
+      - name: Run hello.ps1 if no errors
+        shell: pwsh
+        if: ${{ success() }}
+        run: .\hello.ps1
