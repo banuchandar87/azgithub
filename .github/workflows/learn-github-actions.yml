@@ -39,8 +39,27 @@ jobs:
           } else {
             Write-Output "There were $($errors.Count) errors and $($warnings.Count) warnings total."
           }
-
+      - name: Validate PowerShell syntax
+        shell: pwsh
+        run: |
+          Get-ChildItem . -Recurse -Filter *.ps1 |
+            ForEach-Object {
+              try {
+                [ScriptBlock]::Create((Get-Content $_)) | Out-Null
+                Write-Host "OK: $($_.FullName)"
+              } catch {
+                Write-Error "Syntax error in file $($_.FullName): $($_.Exception.Message)"
+                exit 1
+              }
+            }
+              
+  Run-powershell-script:
+    needs: pester-test
+    name: Run-powershell-script
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v5
       - name: Run hello.ps1 if no errors
         shell: pwsh
-        if: ${{ success() }}
         run: ./Scripts/hello.ps1

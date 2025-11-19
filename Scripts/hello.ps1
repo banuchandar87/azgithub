@@ -1,6 +1,6 @@
 # Define a variable
 $userName = "Guest"
-$currentDate = Get-Dat
+$currentDate = Get-Date
 
 # Output a welcome message
 Write-Host "Hello, $userName!"
@@ -22,7 +22,7 @@ foreach ($fruit in $fruits) {
 
 # While loop with a counter
 $counter = 1
-Write-Host "`nCounting to 3:"
+Write-Hos "`nCounting to 3:"
 while ($counter -le 3) {
     Write-Host "Count: $counter"
     $counter++
