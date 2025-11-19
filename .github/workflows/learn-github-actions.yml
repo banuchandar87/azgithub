@@ -1,5 +1,5 @@
-name: learn-github-actions
-run-name: ${{ github.actor }} is learning GitHub Actions
+name: Test PowerShell on Ubuntu
+run-name: ${{ github.actor }} is Testing PowerShell on Ubuntu
 on: [push]
 jobs:
   check-bats-version:
@@ -11,3 +11,17 @@ jobs:
           node-version: '20'
       - run: npm install -g bats
       - run: bats -v
+
+  pester-test:
+    name: Pester test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v5
+      - name: Perform a Pester test from the command-line
+        shell: pwsh
+        run: Test-Path resultsfile.log | Should -Be $true
+      - name: Perform a Pester test from the Tests.ps1 file
+        shell: pwsh
+        run: |
+          Invoke-Pester Unit.Tests.ps1 -Passthru
