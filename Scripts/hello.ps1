@@ -22,7 +22,7 @@ foreach ($fruit in $fruits) {
 
 # While loop with a counter
 $counter = 1
-Write-Hos "`nCounting to 3:"
+Write-Host "`nCounting to 3:"
 while ($counter -le 3) {
     Write-Host "Count: $counter"
     $counter++
