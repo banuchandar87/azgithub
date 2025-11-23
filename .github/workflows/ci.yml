@@ -1,22 +1,19 @@
 name: Test PowerShell on Ubuntu
-run-name: Testing matrix strategy
+run-name: Learn github - ${{ github.workflow }} / ${{ github.job }}
 on: [push, pull_request]
 
 jobs:
-  job1:
+  open-issue:
     runs-on: ubuntu-latest
-    outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    permissions:
+      contents: read
+      issues: write
     steps:
-      - id: set-matrix
-        run: echo "matrix={\"include\":[{\"project\":\"foo\",\"config\":\"Debug\"},{\"project\":\"bar\",\"config\":\"Release\"}]}" >> $GITHUB_OUTPUT
-  job2:
-    needs: job1
-    runs-on: ubuntu-latest
-    strategy:
-      matrix: ${{ fromJSON(needs.job1.outputs.matrix) }}
-    steps:
-      - run: echo "Matrix - Project ${{ matrix.project }}, Config ${{ matrix.config }}"
+      - run: |
+          gh issue --repo ${{ github.repository }} \
+            create --title "Issue title" --body "Issue body"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   
   dump_contexts_to_log:
     runs-on: ubuntu-latest
