@@ -1,5 +1,5 @@
 name: Test PowerShell on Ubuntu
-run-name: ${{ github.actor }} is Testing PowerShell on Ubuntu
+run-name: Testing matrix strategy
 on: [push, pull_request]
 
 jobs:
